@@ -1,6 +1,6 @@
 <template>
     <div class="charactere">
-        <img class="marvel" :src="path + '.' + extension" />
+        <img class="marvel" :src="path + '.' + extension" v-on:click="hello" />
         <button v-if="isFav.length !== 0" v-on:click="click">
             <ion-icon name="heart" size="large" style="color: red" />
         </button>
@@ -30,6 +30,10 @@ let {
 
 let isFav = computed(() => store.getters.isfav.filter(favItem => favItem.item.id === id))
 
+const hello = async () => {
+    console.log('hello')
+}
+
 const click = async () => {
     await store.commit('AddorRemove', {
         item: charactere.value,
@@ -54,6 +58,13 @@ h1 {
     width: 100%;
     height: 350px;
     border-radius: 5%;
+    cursor: pointer;
+    transition: 6ms;
+}
+.marvel:hover {
+    width: 150%;
+    height: 400px;
+    position: relative;
 }
 button {
     background-color: white;
