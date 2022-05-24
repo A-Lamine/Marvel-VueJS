@@ -6,7 +6,7 @@ import router from './router'
 const store = createStore({
     state() {
         return {
-            isfav: false,
+            isfav: [],
         }
     },
     getters: {
@@ -15,20 +15,25 @@ const store = createStore({
         },
     },
     mutations: {
-        loadStore() {
-            if (localStorage.getItem('store')) {
-                try {
-                    this.replaceState(JSON.parse(localStorage.getItem('store')))
-                } catch (e) {
-                    console.log('Could not initialize store', e)
-                }
+        verfyFav: async state => {
+            const fav = await localStorage.getItem('store')
+            if (fav) {
+                state.isfav = JSON.parse(fav)
             }
+            /* fav && state.isfav = (JSON.parse(fav))  */
         },
-        click(state) {
-            console.log('Hey')
-            /* state.isfav ? (state.isfav = false) : (state.isfav = true) */
+        AddorRemove(state, item) {
+            const existe = state.isfav.findIndex(element => element.item.id === item.item.id)
+            if (existe !== -1) {
+                state.isfav = state.isfav.filter(element => element.item.id !== item.item.id)
+                localStorage.setItem('store', JSON.stringify(state.isfav))
+            } else {
+                state.isfav = [...state.isfav, item]
+                localStorage.setItem('store', JSON.stringify(state.isfav))
+            }
         },
     },
 })
 
+store.commit('verfyFav')
 createApp(App).use(router).use(store).mount('#app')

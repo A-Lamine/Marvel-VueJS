@@ -10,7 +10,6 @@
 
 <script setup>
 // @ is an alias to /src
-import characteresCard from '@/components/characteresCard.vue'
 import axios from 'axios'
 import { watch, ref, onBeforeMount } from 'vue'
 import MD5 from 'md5'
@@ -35,8 +34,6 @@ const url =
     hash +
     '&limit=99&offset=' +
     page
-
-watch(myData, (currentValue, oldValue) => {})
 
 const callApi = async () => {
     await axios.get(url).then(response => (myData.value = response.data.data.results))

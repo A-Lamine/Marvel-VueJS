@@ -1,13 +1,8 @@
 <template>
     <div class="charactere">
         <img class="marvel" :src="path + '.' + extension" />
-        <button v-if="store.getters.isfav" v-on:click="click">
-            <ion-icon
-                v-on:click="console.log('hey')"
-                name="heart"
-                size="large"
-                style="color: red"
-            />
+        <button v-if="isFav.length !== 0" v-on:click="click">
+            <ion-icon name="heart" size="large" style="color: red" />
         </button>
         <button v-else v-on:click="click">
             <ion-icon name="heart-outline" size="large" style="color: red" />
@@ -16,25 +11,32 @@
     </div>
 </template>
 
+//MyJs Script
+
 <script setup>
-import { defineProps, toRef } from 'vue'
+import { defineProps, ref, toRef, computed } from 'vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
-
 const charactere2 = defineProps({ charactere: Object })
-store.commit('loadStore')
 
 let charactere = toRef(charactere2, 'charactere')
 let {
+    id,
     name,
     thumbnail: { path, extension },
 } = charactere.value
 
+let isFav = computed(() => store.getters.isfav.filter(favItem => favItem.item.id === id))
+
 const click = async () => {
-    store.commit('click')
+    await store.commit('AddorRemove', {
+        item: charactere.value,
+    })
 }
 </script>
+
+//MyStyleTemplate
 
 <style scoped>
 .charactere {
