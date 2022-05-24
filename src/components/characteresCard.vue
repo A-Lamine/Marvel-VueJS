@@ -21,6 +21,7 @@ const store = useStore()
 const charactere2 = defineProps({ charactere: Object })
 
 let charactere = toRef(charactere2, 'charactere')
+
 let {
     id,
     name,

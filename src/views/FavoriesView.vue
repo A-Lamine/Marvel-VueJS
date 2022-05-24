@@ -1,8 +1,8 @@
 <template>
     <div class="wrap">
-        <div class="panel">
-            <div class="characteres" v-for="items in myData" :key="items.id">
-                <CharacteresCard :charactere="items" />
+        <div class="panel" :key="listfav.length">
+            <div class="characteres" v-for="items in listfav" :key="items.id">
+                <CharacteresCard :charactere="items.item" />
             </div>
         </div>
     </div>
@@ -11,7 +11,10 @@
 <script setup>
 import CharacteresCard from '../components/characteresCard.vue'
 import { Store, useStore } from 'vuex'
+import { computed } from 'vue'
+
 const store = useStore()
+let listfav = computed(() => store.getters.isfav)
 </script>
 <style>
 .wrap {
