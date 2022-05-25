@@ -10,7 +10,7 @@ const charactere = defineProps({ charactere: Object })
 
 let { id, name, description, thumbnail } = toRef(charactere, 'charactere').value
 </script>
-<style>
+<style scoped>
 img {
     border-radius: 50%;
     border: solid 5px black;
