@@ -16,7 +16,7 @@ import { computed } from 'vue'
 const store = useStore()
 let listfav = computed(() => store.getters.isfav)
 </script>
-<style>
+<style scoped>
 .wrap {
     display: flex;
     flex-direction: column;
